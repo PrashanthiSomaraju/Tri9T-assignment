@@ -18,7 +18,10 @@ class Document(Base):
 
 class DocumentVersion(Base):
     __tablename__ = "versions"
-    __table_args__ = (UniqueConstraint("document_id", "version_number"), UniqueConstraint("document_id", "source_sha256"))
+    __table_args__ = (
+        UniqueConstraint("document_id", "version_number"),
+        UniqueConstraint("document_id", "source_sha256"),
+    )
     id: Mapped[int] = mapped_column(primary_key=True)
     document_id: Mapped[int] = mapped_column(ForeignKey("documents.id"))
     version_number: Mapped[int]
@@ -43,7 +46,9 @@ class NodeRevision(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     logical_node_id: Mapped[int] = mapped_column(ForeignKey("logical_nodes.id"))
     document_version_id: Mapped[int] = mapped_column(ForeignKey("versions.id"))
-    parent_revision_id: Mapped[int | None] = mapped_column(ForeignKey("revisions.id"), nullable=True)
+    parent_revision_id: Mapped[int | None] = mapped_column(
+        ForeignKey("revisions.id"), nullable=True
+    )
     heading: Mapped[str]
     section_number: Mapped[str | None]
     declared_level: Mapped[int]

@@ -7,22 +7,22 @@ from uuid import UUID
 
 class GenerationStore:
     def __init__(self, directory: Path):
-        self.directory=directory
-        directory.mkdir(parents=True,exist_ok=True)
+        self.directory = directory
+        directory.mkdir(parents=True, exist_ok=True)
 
     def path(self, identifier: str):
-        return self.directory / f'{UUID(identifier)}.json'
+        return self.directory / f"{UUID(identifier)}.json"
 
     def write(self, identifier: str, content: dict):
-        path=self.path(identifier)
-        fd,temp=tempfile.mkstemp(prefix='.generation-',dir=self.directory)
+        path = self.path(identifier)
+        fd, temp = tempfile.mkstemp(prefix=".generation-", dir=self.directory)
         try:
-            with os.fdopen(fd,'w') as stream:
-                json.dump(content,stream,ensure_ascii=False,indent=2)
+            with os.fdopen(fd, "w") as stream:
+                json.dump(content, stream, ensure_ascii=False, indent=2)
                 stream.flush()
                 os.fsync(stream.fileno())
-            os.replace(temp,path)
-            directory_fd=os.open(self.directory,os.O_RDONLY)
+            os.replace(temp, path)
+            directory_fd = os.open(self.directory, os.O_RDONLY)
             try:
                 os.fsync(directory_fd)
             finally:

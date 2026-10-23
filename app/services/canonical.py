@@ -8,10 +8,30 @@ def normalize(text: str) -> str:
 
 
 def digest(value) -> str:
-    return hashlib.sha256(json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode()).hexdigest()
+    return hashlib.sha256(
+        json.dumps(
+            value, sort_keys=True, ensure_ascii=False, separators=(",", ":")
+        ).encode()
+    ).hexdigest()
 
 
 def content_hash(heading: str, elements: list) -> str:
-    # Exclude layout, confidence, page numbers, warnings and extraction method.
-    semantic = [{"kind": e["kind"], "text": normalize(e["text"]), **({"rows": [[normalize(c) for c in r] for r in e["rows"]]} if "rows" in e else {})} for e in elements]
+    """Hash text, element order/kinds and table cell associations, excluding layout.
+
+    Consecutive visual paragraph lines form one canonical text run, so changes
+    in line/page wrapping alone do not invalidate an otherwise identical source.
+    """
+    semantic = []
+    for e in elements:
+        item = {"kind": e["kind"], "text": normalize(e["text"])}
+        if "rows" in e:
+            item["rows"] = [[normalize(c) for c in row] for row in e["rows"]]
+        if (
+            item["kind"] == "paragraph"
+            and semantic
+            and semantic[-1]["kind"] == "paragraph"
+        ):
+            semantic[-1]["text"] = normalize(semantic[-1]["text"] + " " + item["text"])
+        else:
+            semantic.append(item)
     return digest({"heading": normalize(heading), "elements": semantic})

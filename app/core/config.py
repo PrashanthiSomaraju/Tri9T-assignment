@@ -4,7 +4,9 @@ from pydantic import SecretStr
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_prefix="CT_", env_file=".env", extra="ignore")
+    model_config = SettingsConfigDict(
+        env_prefix="CT_", env_file=".env", extra="ignore", validate_assignment=True
+    )
     database_url: str = "sqlite:///./generated/ct200.db"
     generation_dir: Path = Path("generated/generations")
     provider: str = "mock"
