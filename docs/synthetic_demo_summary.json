@@ -1,0 +1,33 @@
+{
+  "synthetic_fixture": true,
+  "original_pdfs_validated": false,
+  "provider": "mock",
+  "steps": [
+    "v1 ingested",
+    "tree browsed",
+    "safety search passed",
+    "selection pinned",
+    "mock generation validated",
+    "v2 ingested",
+    "both versions retained",
+    "historical output unchanged",
+    "selection unchanged",
+    "stale and unchanged cases verified",
+    "diff retrieved"
+  ],
+  "changed_sections": [
+    "2.1.1.1",
+    "3.2",
+    "4.2",
+    "4.3"
+  ],
+  "added_sections": [
+    "5.3"
+  ],
+  "statuses_after_v2": [
+    "stale",
+    "stale",
+    "current"
+  ],
+  "historical_generation_unchanged": true
+}

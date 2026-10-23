@@ -1,0 +1,33 @@
+{
+  "test_results": {
+    "tests": 42,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": 42
+  },
+  "python": "3.12.14",
+  "original_pdfs_inspected": false,
+  "original_pdf_extraction_verified": false,
+  "synthetic_versions_inspected": 2,
+  "synthetic_pages_visually_reviewed": 4,
+  "actual_tesseract_tests": true,
+  "mock_api_demo_passed": true,
+  "live_http_workflow_passed": true,
+  "documented_curl_examples_passed_with_synthetic_paths": true,
+  "live_provider_tested": false,
+  "provider_adapter_tested_with_stub": true,
+  "statuses_after_v2": [
+    "stale",
+    "stale",
+    "current"
+  ],
+  "limitations": [
+    "Original manuals absent",
+    "Live provider key/model not configured",
+    "Multicolumn/rotated table reconstruction requires review",
+    "Section-level conservative impact detection",
+    "Initial schema only; no migration workflow",
+    "Concurrent cache misses may create duplicate generations"
+  ]
+}
