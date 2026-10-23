@@ -56,9 +56,6 @@ def parse_hierarchy(elements: list[dict]) -> tuple[list[dict], str]:
                     kind = 'unclassified'
                     current['warnings'].append('possible unruled table; raw line retained, structure uncertain')
             current['elements'].append({**e,'kind':kind})
-        # Flush preamble before the first heading without disturbing indices.
-        if heading and title_lines and len(nodes)==1 and current is nodes[0]:
-            pass
     # The preamble is separate from sections; source title lines are accounted below.
     assigned = {e['element_id'] for n in nodes for e in n['elements']}
     preamble = [dict(e,kind='title' if e['text'] in title_lines else e['kind']) for e in elements if e['kind']!='repeated_header' and e['element_id'] not in assigned]
